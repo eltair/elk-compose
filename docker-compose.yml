@@ -1,0 +1,26 @@
+version: '2'
+services:
+  elasticsearch:
+    image: elasticsearch:2
+    environment:
+      ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+    command: elasticsearch -Des.network.host=0.0.0.0
+  logstash:
+    image: logstash:2
+    command: logstash -f /config/logstash.conf
+    volumes:
+      - ./logstash:/config
+    ports:
+      - "2055:2055/udp"
+      - "514:1514/tcp"
+      - "514:1514/udp"
+    links:
+      - elasticsearch
+  kibana:
+    image: kibana:4
+    ports:
+      - "5601:5601"
+    links:
+      - elasticsearch
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
