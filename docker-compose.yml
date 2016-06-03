@@ -6,6 +6,9 @@ services:
     environment:
       ES_JAVA_OPTS: "-Xms1g -Xmx1g"
     command: elasticsearch -Des.network.host=0.0.0.0
+    volumes:
+      - /zfs/elasticsearch/data:/usr/share/elasticsearch/data
+      - /zfs/elasticsearch/config:/usr/share/elasticsearch/config
   logstash:
     restart: always
     image: logstash:2
