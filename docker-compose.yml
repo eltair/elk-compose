@@ -14,7 +14,7 @@ services:
     image: logstash:2
     command: logstash -f /config/logstash.conf
     volumes:
-      - ./logstash:/config
+      - ./logstash:/config:ro
     ports:
       - "2055:2055/udp"
       - "514:1514/tcp"
